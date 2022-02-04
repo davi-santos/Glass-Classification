@@ -49,6 +49,16 @@ Aqui, é possível observar que de fato essas variáveis possuem algum grau de c
 
 ### 2. Algoritmos de Machine Learning
 
+  Os algoritmos de Machine Learning treinados foram as Decision Trees e Logistic Regression. Primeiramente, a base foi separada em 70% para treinamento e 30% para teste.
+
+#### 2.1 Decision Trees
+
+  Para treinamento, foi testado diferentes profundidades para este problema. A Decision Tree de profundidade 5 foi a que apresentou melhor *score* no treinamento e no teste. 
+
+#### 2.2 Logistic Regression
+
+  Para o treinamento, foi testado diferentes valores para a regularização C. O Logistic Regression com regularização C=10 foi o que apresentou melhor *score* no treinamento e no teste.
+
 ### 3. Resultados
 
 Foram treinados alguns modelos de Machine Learning em Decision Trees e Logistic Regression. Ambos os modelos apresentaram boa performance no geral, classificando bem quase todas as classes. A classe com pior predição foi a classe 3. Para mais informações acesse o arquivo [Data Analysis.ipynb](https://github.com/davi-santos/Glass-Classification/blob/main/Data%20Analysis.ipynb).
