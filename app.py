@@ -5,7 +5,7 @@ import plotly.express as px
 import pandas as pd
 from dash_extensions import Lottie
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 text = "industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
 
@@ -14,12 +14,13 @@ text = "industry. Lorem Ipsum has been the industry's standard dummy text ever s
 lottie_file = 'https://assets5.lottiefiles.com/packages/lf20_mkppywz7.json'
 options = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 
+
 app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
-                Lottie(options=options, width="67%", height="67%", url=lottie_file),
+                Lottie(options=options, width="77%", height="77%", url=lottie_file),
             ],
-            width=2
+            width={'size':2, 'offset':2}
         ),
         dbc.Col(
             #[
@@ -29,34 +30,37 @@ app.layout = dbc.Container([
             #        )
             #    ])
             #],
-            html.H2('CLASSIFICADOR DE VIDROS DO KAGGLE',style={'text-align':'center'}),
+            [html.H2('CLASSIFICADOR DE VIDROS DO KAGGLE',style={'text-align':'center'}),
+            html.P('Por Davi Santos', style={'text-align':'center'})],
             className='ml-5',
-            width=10,
+            width=6,
         ),
         ],
         #row parameters
         align='center',
-        className='mt-3 ml-1 mb-2', 
+        className='mt-3 ml-1 mb-2 center', 
     ),
     dbc.Row(
         [
             dbc.Col([
                     dbc.Card([
                             dbc.CardBody([
-                                    html.H4('This is the title', className='card-title'),
-                                    dbc.DropdownMenu([
-                                            dbc.DropdownMenuItem('Item 1', header=True),
-                                            dbc.DropdownMenuItem('Item 2'),
-                                            dbc.DropdownMenuItem('Item 3')
-                                        ],
-                                        label='Base de dados',
-                                        color='success',
-                                        className='ml-1',
-                                    ),
+                                    html.H5('Sobre a base de dados', className='card-title'),
+                                    #dbc.DropdownMenu([
+                                    #        dbc.DropdownMenuItem('Item 1', header=True),
+                                    #        dbc.DropdownMenuItem('Item 2'),
+                                    #        dbc.DropdownMenuItem('Item 3')
+                                    #    ],
+                                    #    label='Base de dados',
+                                    #    color='success',
+                                    #    className='ml-1',
+                                    #),
+
                                     html.P(text, className='card-text'),
                                 ]
                             ),
-                        ]
+                        ],
+                        color=''
                     ),
                 ],
                 width=5
