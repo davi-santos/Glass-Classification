@@ -1,76 +1,102 @@
+from turtle import width
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.COSMO])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-
-df = pd.read_csv('./data/glass.csv')
-#Fist figure
-fig = px.pie(df, names='Type', title='Tipos de Vidro')
-
-fig2 = px.scatter(df, x='Si', y='RI', trendline="ols")
-
-
-app.layout = html.Div(children=[
-    dbc.Row(children=[
-        dbc.Col(
-            [
-                html.H1(
-                        'Classificação de Vidros', 
-                        style={'text-align':'center'}
-                    ),
-                html.P(
-                        'Posso escrever algo como (Disponível no Kaggle)', 
-                        style={'text-align':'center'}
-                    )
-            ],
-            width={'size':6, 'offset':3},
-        )],
-        #align='center',
-        #justify='center'
-    ),
-
-    dbc.Row(children=[
+app.layout = dbc.Container([
+    dbc.Row([
         dbc.Col([
-                html.H3('Projeto'),
-                html.P('Esta é uma base de dados obtida no Kaggle. A base \
-                    consiste em dados sobre 7 tipos de vidro, sendo estes:'),
-               dbc.ListGroupItem("Tipo 1: construção de janelas flutuante processado"),
-               dbc.ListGroupItem("Tipo 2: building_windows_non_float_processed "),
-               dbc.ListGroupItem("Tipo 3: vehicle_windows_float_processed"),
-               dbc.ListGroupItem("Tipo 4: vehicle_windows_non_float_processed"),
-               dbc.ListGroupItem("Tipo 5: containers "),
-               dbc.ListGroupItem("Tipo 6: tableware"),
-               dbc.ListGroupItem("Tipo 7: headlamps"),
-            ], 
-        ),
-        dbc.Col([
-                dcc.Graph(
-                    id='something',
-                    figure=fig
+                dbc.Card([
+                        dbc.CardBody(html.P('Some image in here'))
+                    ],
                 )
-            ], 
+            ],
+            width=2
         ),
-    ]),
-
-    dbc.Row(children=[
         dbc.Col([
-            html.H4('Blá blá bla')            
-            
-        ]),
+                dbc.Card([
+                    dbc.CardBody(
+                        html.H2('CLASSIFICADOR DE VIDROS DO KAGGLE',),
+                        className='ml-5'
+                    )
+                ])
+            ],
+            width=10,
+        ),
+        ],
+        #row parameters
+        align='center',
+        className='mt-3 ml-1 mb-2'    
+    ),
+    dbc.Row(
+        [
+            dbc.Col([
+                    dbc.Card([
+                            dbc.CardBody([
+                                    dbc.DropdownMenu([
+                                            dbc.DropdownMenuItem('Item 1', header=True),
+                                            dbc.DropdownMenuItem('Item 2'),
+                                            dbc.DropdownMenuItem('Item 3')
+                                        ],
+                                        label='Base de dados',
+                                        color='success',
+                                        className='ml-1',
+                                    ),
+                                    html.P('Some text in here', className='mt-2')
+                                ]
+                            ),
+                        ]
+                    ),
+                ],
+                width=5
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        [
+                            dbc.CardBody(
+                                [
+                                    html.H3('Graphics'),
+                                    dcc.Graph(id='first-image', figure={})
+                                ]
+                            )
+                        ]
+                    )
+                ],
+                align='center',
+                width=7
+            ),
+        ]
+    ),
+    dbc.Row(
+        [
+            dbc.Col([
+                    html.H5('insight graphs'),
+                    dcc.Graph(id='another-graph', figure={})
+                ],
+                width=4
+            ),
+            dbc.Col([
+                    html.H5('graphs about models'),
+                    dcc.Graph(id='graph-graph', figure={})
+                ],
+                width=4,
+            ),
+            dbc.Col([
+                    html.H5('Get predictions'),
+                    dcc.Graph(id='graph-233', figure={})
+                ],
+                width=4,
+            ),
+        ],
+        className='mt-3'
+    ),
+    dbc.Row(
 
-        dbc.Col([
-            dcc.Graph(
-                id='Figure-1',
-                figure=fig2
-            )
-
-        ])
-
-
-    ])
+    ),
 ])
 
 if __name__ == '__main__':
