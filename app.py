@@ -3,39 +3,47 @@ from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
+from dash_extensions import Lottie
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
+
+text = "industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+
+#Config lottie files
+#lottie_file = 'https://assets8.lottiefiles.com/packages/lf20_GZxjzF.json'
+lottie_file = 'https://assets5.lottiefiles.com/packages/lf20_mkppywz7.json'
+options = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 
 app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
-                dbc.Card([
-                        dbc.CardBody(html.P('Some image in here'))
-                    ],
-                )
+                Lottie(options=options, width="67%", height="67%", url=lottie_file),
             ],
             width=2
         ),
-        dbc.Col([
-                dbc.Card([
-                    dbc.CardBody(
-                        html.H2('CLASSIFICADOR DE VIDROS DO KAGGLE',),
-                        className='ml-5'
-                    )
-                ])
-            ],
+        dbc.Col(
+            #[
+            #    dbc.Card([
+            #        dbc.CardBody(
+            #            
+            #        )
+            #    ])
+            #],
+            html.H2('CLASSIFICADOR DE VIDROS DO KAGGLE',style={'text-align':'center'}),
+            className='ml-5',
             width=10,
         ),
         ],
         #row parameters
         align='center',
-        className='mt-3 ml-1 mb-2'    
+        className='mt-3 ml-1 mb-2', 
     ),
     dbc.Row(
         [
             dbc.Col([
                     dbc.Card([
                             dbc.CardBody([
+                                    html.H4('This is the title', className='card-title'),
                                     dbc.DropdownMenu([
                                             dbc.DropdownMenuItem('Item 1', header=True),
                                             dbc.DropdownMenuItem('Item 2'),
@@ -45,7 +53,7 @@ app.layout = dbc.Container([
                                         color='success',
                                         className='ml-1',
                                     ),
-                                    html.P('Some text in here', className='mt-2')
+                                    html.P(text, className='card-text'),
                                 ]
                             ),
                         ]
@@ -74,28 +82,44 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([
-                    html.H5('insight graphs'),
-                    dcc.Graph(id='another-graph', figure={})
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.H5('insight graphs'),
+                            dcc.Graph(id='another-graph', figure={})
+                        ]
+                    )
+                )
                 ],
                 width=4
             ),
             dbc.Col([
-                    html.H5('graphs about models'),
-                    dcc.Graph(id='graph-graph', figure={})
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5('graphs about models'),
+                                dcc.Graph(id='graph-graph', figure={})
+                            ]
+                        )
+                    )
+
                 ],
                 width=4,
             ),
             dbc.Col([
-                    html.H5('Get predictions'),
-                    dcc.Graph(id='graph-233', figure={})
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5('Get predictions'),
+                                dcc.Graph(id='graph-233', figure={})
+                            ]
+                        )
+                    )
                 ],
                 width=4,
             ),
         ],
-        className='mt-3'
-    ),
-    dbc.Row(
-
+        className='mt-3 mb-3'
     ),
 ])
 
