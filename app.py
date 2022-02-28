@@ -20,112 +20,133 @@ options_image = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAsp
 app = Dash(__name__, external_stylesheets=[dbc.themes.COSMO])
 
 app.layout = dbc.Container([
-    dbc.Row([
-        dbc.Col([
-                Lottie(options=options_image, url=logo_image),
-                #Lottie(options=options_image, width="97%", height="97%", url=logo_image),
-            ],
-            width={'size':2},
-            align='center',
-        ),
-        dbc.Col(
-            #[
-            #    dbc.Card([
-            #        dbc.CardBody(
-            #            
-            #        )
-            #    ])
-            #],
-            [
-            html.H1('CLASSIFICADOR DE VIDROS DO KAGGLE',style={'text-align':'center'}),
-            html.P('Por Davi Santos', style={'text-align':'center'})],
-            className='',
-            width=8,
-        ),
-        ],
-        #row parameters
-        align='center',
-        className='mt-3 mb-2 center', 
-    ),
+    # dbc.Row([
+    #     dbc.Col([
+    #             Lottie(options=options_image, url=logo_image),
+    #             #Lottie(options=options_image, width="97%", height="97%", url=logo_image),
+    #         ],
+    #         width={'size':2},
+    #         align='center',
+    #     ),
+    #     dbc.Col(
+    #         #[
+    #         #    dbc.Card([
+    #         #        dbc.CardBody(
+    #         #            
+    #         #        )
+    #         #    ])
+    #         #],
+    #         [
+    #         html.H1('CLASSIFICADOR DE VIDROS DO KAGGLE',style={'text-align':'center'}),
+    #         html.P('Por Davi Santos', style={'text-align':'center'})],
+    #         className='',
+    #         width=8,
+    #     ),
+    #     ],
+    #     #row parameters
+    #     align='center',
+    #     className='mt-3 mb-2 center', 
+    # ),
     dbc.Row([
         dbc.Col([
             dbc.Card([
-                dbc.CardHeader(
-                    html.H5('Base de Dados', className='card-title', style={'text-align':'center'}),
-                ),
-                
-                #dbc.CardBody([
-                html.P('Sobre a Base de Dados:', className='ml-5',style={'text-align':'center'}),
-                html.H3('214 amostras', className='ml-5', style={'text-align':'center', 'text-color':'#379aa3'}, ),
-                html.H3('9 atributos', className='ml-5', style={'text-align':'center'}),
-
-                html.Div([
-                dbc.Button(
-                    "Ver Atributos",
-                    color="success",
-                        id="left",
-                        className="me-1",
-                        n_clicks=0,
-                    ),
-                    
-                dbc.Button(
-                        "Ver Tipos de Vidro",
-                        color="info",
-                        id="right",
-                        className="me-1",
-                        n_clicks=0,
-                ),
-
-            dbc.Button("Ver todos os dados", color="primary", outline=True,id="both", n_clicks=0),
-            
+                dbc.CardHeader([
+                    html.Div([
+                        html.H1('Classificador de Vidros',style={'text-align':'center'}),
+                        Lottie(options=options_image, width="40%", height="40%", url=logo_image),
+                    ],
+                    className='border-0'
+                )
+                ]),
             ],
-            className='d-grid gap-2 d-md-flex justify-content-md-center mb-2'
+            className=''
             ),
-                
+            dbc.Card([
+                dbc.CardHeader(
+                    html.H4('Sobre a Base de Dados', className='card-title'),
+                    className='bg-dark text-center text-light'
+                ),
 
-                ],
-                
+                dbc.CardBody([
+                    html.H3('214 amostras', className='ml-5 text-center'),
+                    html.H3('9 atributos', className='ml-5 text-center'),
+
+                    html.Div([
+                        dbc.Button("Ver Atributos",color="secondary", id="left", outline=True,className="me-1", n_clicks=0,),  
+                        dbc.Button("Ver Tipos de Vidro",id="right",color="secondary", outline=True,className="me-1",n_clicks=0,),
+                        dbc.Button("Ver todos os dados", color="secondary",outline=True, id="both", n_clicks=0),
+                        ],
+                        className='d-grid gap-2 d-md-flex justify-content-md-center mb-2'
+                    )],
+                    className='bg-light'
+                ),
+            ]),
+            
+            dbc.Collapse(
+                dbc.Card(
+                    [
+                        html.H5('Atributos:', className='font-weight-bold'),
+                        html.Ul([
+                            html.Li('RI - Índice de Refração;'),
+                            html.Li('Na - Sódio;'),
+                            html.Li('Mg - Magnésio;'),
+                            html.Li('Al - Alumínio;'),
+                            html.Li('Si - Silício;'),
+                            html.Li('K - Potássio;'),
+                            html.Li('Ca - Cálcio;'),
+                            html.Li('Ba - Bário;'),
+                            html.Li('Fe - Ferro.'),
+                        ],
+                        className='ml-5 text-justify')
+                    ], 
+                    body=True,
+                    className='bg-light'
+                ),
+                id="left-collapse",
+                is_open=False,
+                className='bg-light'
+            ),
+
+            dbc.Collapse(
+                dbc.Card([
+                        html.H5('Tipos de Vidro:', className='font-weight-bold'),
+                        html.Ul([
+                            html.Li('Tipo 1 - Construção de Janela Flutuante Processado;'),
+                            html.Li('Tipo 2 - Construção de Janela Não-flutuante processado;'),
+                            html.Li('Tipo 3 - Janela de Veículo Flutuante Processado;'),
+                            html.Li('Tipo 4 - Janela de Veículo Não-flutuante processado'),
+                            html.Li('Tipo 5 - Vidros para recipientes'),
+                            html.Li('Tipo 6 - Vidro de Louças;'),
+                            html.Li('Tipo 7 - Vidro para Faróis'),
+                        ],
+                        className='ml-5 text-justify')                    
+                ], body=True, className='bg-light',),
+                    id="right-collapse",
+                    is_open=False,
             ),
             
-
-
-                    
-
-                    dbc.Collapse(
-                    dbc.Card("This is the left card!", body=True),
-                                id="left-collapse",
-                                is_open=False,
+            dbc.Card([
+                dbc.CardHeader(
+                    html.H4('Achados', className='card-title', style={'text-align':'center','color':'#FFFFFF'}),
+                    className='bg-dark'
                 ),
-
-                dbc.Collapse(
-                    dbc.Card("This is the right card!", body=True),
-                        id="right-collapse",
-                        is_open=False,
+                dbc.CardBody(html.P('Oi')                        )
+            ]),
+            
+            dbc.Card([
+                dbc.CardHeader(
+                    html.H4('Fazer Predições', className='card-title'),
+                    className='text-center text-light bg-dark'
                 ),
-
-
-                    dbc.Card([
-                        dbc.CardHeader(
-                            html.H5('Achados', className='card-title', style={'text-align':'center'})
-                        ),
-                        dbc.CardBody(
-                            html.P('Oi')
-                        )
-
-                    ]),
-                    dbc.Card([
-                        dbc.CardHeader(
-                            html.H5('Predições', className='card-title', style={'text-align':'center'})
-                        ),
-                        dbc.CardBody(
-                            html.P('Oi')
-                        )
-
-                    ])
-                ],
-                align='top',
-                width=5,
-                className='mt-3'
+                
+                dbc.CardBody(
+                    html.P('Oi')
+                )
+            ])
+            ],
+            align='top',
+            width=5,
+            className='mt-3',
             ),
             dbc.Col(
                 [
