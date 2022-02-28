@@ -5,8 +5,7 @@ from dash.dependencies import Input, Output, State
 import plotly.express as px
 import pandas as pd
 from dash_extensions import Lottie
-
-
+import joblib
 
 text = "industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
 
@@ -53,7 +52,7 @@ app.layout = dbc.Container([
                 dbc.CardHeader([
                     html.Div([
                         html.H1('Classificador de Vidros',style={'text-align':'center'}),
-                        Lottie(options=options_image, width="40%", height="40%", url=logo_image),
+                        Lottie(options=options_image, width="30%", height="30%", url=logo_image),
                     ],
                     className='border-0'
                 )
@@ -135,7 +134,7 @@ app.layout = dbc.Container([
             
             dbc.Card([
                 dbc.CardHeader(
-                    html.H4('Fazer Predições', className='card-title'),
+                    html.H4('Avaliação do Modelo', className='card-title'),
                     className='text-center text-light bg-dark'
                 ),
                 
@@ -154,33 +153,100 @@ app.layout = dbc.Container([
                     #    [
                             #dbc.CardBody(
                               #  [
-                                    html.H3('Gráficos', style={'text-align':'center'}),
-                                    dbc.RadioItems(
-                                        options=[
-                                            {"label": "Gráfico em Pizza", "value": 1},
-                                            {"label": "Gráfico de Barras", "value": 2},
-                                            {"label": "Mapa de Calor", "value": 3},
+                                    dbc.Card(
+                                        dbc.CardHeader([
+                                           html.H4('Opções Gráficas:', className=''),
+                                            dbc.RadioItems(
+                                                options=[
+                                                    {"label": "Gráfico em Pizza", "value": 1},
+                                                    {"label": "Gráfico de Barras", "value": 2},
+                                                    {"label": "Mapa de Calor", "value": 3},
+                                                    {"label": "Importância de Atributos do Modelo", "value": 4},
+                                                ],
+                                                value=1,
+                                                id="graphic-option",
+                                                inline=True,
+                                            ),
                                         ],
-                                        value=1,
-                                        id="graphic-option",
-                                        inline=True,
-                                        style={'text-align':'center'}
+                                        className='bg-dark text-light'
+                                        )
                                     ),
                                     dcc.Graph(id='first-image', figure={}),
-                                    dbc.Card('Model Evaluation')
+                                    dbc.Card([
+                                        dbc.CardHeader([
+                                            html.H4('Fazer Predições:'),
+                                        ], className='bg-dark text-light'),
+                                        dbc.CardBody([
+                                          dbc.Row([
+                                              dbc.Col([
+                                                   dbc.Label("Índice de Refração", html_for="slider"),
+                                                    dcc.Slider(id="RI", min=1.510, max=1.533, step=0.006, value=1.516),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Sódio", html_for="slider"),
+                                                    dcc.Slider(id="Na", min=10.7, max=17.4, step=1.4, value=12.1),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Magnésio", html_for="slider"),
+                                                    dcc.Slider(id="Mg", min=0, max=4.5, step=0.75, value=0.75),
+                                              ], width=4)
+                                          ], className='text-center'),
+                                          dbc.Row([
+                                              dbc.Col([
+                                                   dbc.Label("Alumínio", html_for="slider"),
+                                                    dcc.Slider(id="Al", min=0, max=4, step=0.7, value=0.7),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Silício", html_for="slider"),
+                                                    dcc.Slider(id="Si", min=68, max=76, step=1, value=69),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Potássio", html_for="slider"),
+                                                    dcc.Slider(id="K", min=0, max=6.5, step=1.25, value=1.25),
+                                              ], width=4)
+                                          ], className='text-center'),
+                                          dbc.Row([
+                                              dbc.Col([
+                                                dbc.Label("Cálcio", html_for="slider"),
+                                                dcc.Slider(id="Ca", min=5.4, max=16.2, step=2, value=7.4),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Bário", html_for="slider"),
+                                                    dcc.Slider(id="Ba", min=0, max=3.2, step=0.8, value=0.8),
+                                              ], width=4),
+                                              dbc.Col([
+                                                   dbc.Label("Ferro", html_for="slider"),
+                                                    dcc.Slider(id="Fe", min=0, max=0.6, step=0.1, value=0.1),
+                                              ], width=4),
+                                          ], className='text-center', justify='center'),
+                                            dbc.Row([
+                                                dbc.Col([
+                                                    dbc.Button("Fazer Predição", color="secondary", outline=True)
+                                                ], width=3),
+                                                dbc.Col([
+                                                    dbc.Card([
+                                                        html.H4('Resultado: ', id='result')
+                                                    ],
+                                                    className='bg-dark text-light text-center font-weight-lighter',
+                                                    ),
+                                                ], width=4),
+                                            ], justify='center', align='center', className='mt-4')
+                                        ])
+                                    ]
+                                    ),  
                              #   ]
                             #)
                     #    ]
                     #)
                 ],
-                className='justify-content-center',
+                className='justify-content-center mt-3',
                 align='top',
                 width={'size':7},
                 style={'color':'#000000'}
             ),
         ]
     ),
-],fluid=False)
+],fluid=True)
 
 @app.callback(
     Output('first-image', 'figure'),
@@ -197,6 +263,10 @@ def image_top(option):
     elif option==3:
         matrix_corr = df.drop('Type', axis=1).corr()
         fig = px.imshow(matrix_corr)
+    elif option==4:
+        dt = joblib.load('./models/DecisionTree.joblib')
+        df_decisionTree = pd.Series(dt.feature_importances_, index=df.columns.values[0:-1])
+        fig = px.bar(df_decisionTree)
 
     return fig
 
@@ -220,19 +290,6 @@ def toggle_left(n_right, n_both, is_open):
     if n_right or n_both:
         return not is_open
     return is_open
-
-
-#@app.callback(
-#    Output('insight-graphs-image', 'figure'),
-#    Input('insight-graphs-option', 'value')
-#)
-#def set_analysis_graphs(option):
-#    
-#    if option==1:
-#        matrix_corr = df.drop('Type', axis=1).corr()
-#        fig = px.imshow(matrix_corr)
-#
-#    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
