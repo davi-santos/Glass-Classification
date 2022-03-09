@@ -1,4 +1,4 @@
-# Problema da classificação de vidros
+# Problema de classificação de vidros do Kaggle
 
 Este é um problema retirado da base de dados do [Kaggle](https://www.kaggle.com/uciml/glass). Para resolver este problema foram utilizados códigos em Python e algoritmos de Machine Learning para obtenção de insights e criação de modelos preditivos. O código foi escrito em um Jupyter Notebook e para acessá-lo basta clicar  em [Data Analysis.ipynb](https://github.com/davi-santos/Glass-Classification/blob/main/Data%20Analysis.ipynb).
 
@@ -49,17 +49,23 @@ Aqui, é possível observar que de fato essas variáveis possuem algum grau de c
 
 ### 2. Algoritmos de Machine Learning
 
-  Os algoritmos de Machine Learning treinados foram as Decision Trees e Logistic Regression. Primeiramente, a base foi separada em 70% para treinamento e 30% para teste.
+  Os algoritmos de Machine Learning treinados foram as Decision Trees, Random Forest e Logistic Regression. Primeiramente, a base foi separada em 70% para treinamento e 30% para teste.
 
 #### 2.1 Decision Trees
 
-  Para treinamento, foi testado diferentes profundidades para este problema. A Decision Tree de profundidade 5 foi a que apresentou melhor *score* no treinamento e no teste. 
+  Para treinamento, foram testadas diferentes profundidades para este problema. A Decision Tree de profundidade 5 foi a que apresentou melhor *score* no treinamento e no teste. 
 
-#### 2.2 Logistic Regression
+#### 2.2 Random Forest
+  Para treinamento, foram testados diferentes números de estimadores e foi fixada a profundidade de 10 para as árvores. A Ranfom Forest de 10 estimadores foi a que apresentou melhores resultados nesta primeira investigação.
 
-  Para o treinamento, foi testado diferentes valores para a regularização C. O Logistic Regression com regularização C=10 foi o que apresentou melhor *score* no treinamento e no teste.
+
+#### 2.3 Logistic Regression
+
+  Para o treinamento, foram testados diferentes valores para a regularização C. Todos os valores de C apresentaram resultados semelhantes, então foi escolhido o maior valor de C=500.
 
 ### 3. Resultados
 
-Foram treinados alguns modelos de Machine Learning em Decision Trees e Logistic Regression. Ambos os modelos apresentaram boa performance no geral, classificando bem quase todas as classes. A classe com pior predição foi a classe 3. Para mais informações acesse o arquivo [Data Analysis.ipynb](https://github.com/davi-santos/Glass-Classification/blob/main/Data%20Analysis.ipynb).
+![alt text](https://github.com/davi-santos/Glass-Classification/blob/main/figures/acuracia_modelos.png)
+
+Foram treinados alguns modelos de Machine Learning em Decision Trees, Random Forest e Logistic Regression. Ambos os modelos apresentaram acurácia média por volta dos 60%, com destaque para as Random Forests com 70% de acurácia. Contudo, todos os modelos falharam em classificar as amostras da classe 3. Para mais informações acesse o arquivo [Data Analysis.ipynb](https://github.com/davi-santos/Glass-Classification/blob/main/Data%20Analysis.ipynb).
 
